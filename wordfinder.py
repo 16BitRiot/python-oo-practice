@@ -21,7 +21,18 @@ class WordFinder:
             return self.words()[random.randrange(0, self.lines_count - 1)]
             """returns a random selection by generating a number between one and the highest number in the doc, and uses that number as an index number"""
 
+class SpecialWordFinder(WordFinder):
+    """this is a subclass that inherits from the WordFinder class"""
+    def __init__(self, path):
+        super().__init__(path)
+        """initilaize same settings from superclass"""
+    def random(self):
+        with open(self.file_path, "r") as y:
+            """open the file as read only, and store its contents in y"""
+            self.words = [line for line in y if not line.startswith("#") and line.strip()]
+            """check for and skip lines that start with a # or are blank"""
+            return self.words[random.randrange(0, len(self.words) - 1)]
+            """returns a random selection by generating a number between one and the highest number in the doc, and uses that number as an index number"""
 
-webster = WordFinder(
-    "/Users/philfryer/Desktop/School Spring/Unit21.4pythonoop/python-oo-practice/words.txt")
+webster = WordFinder("/Users/philfryer/Desktop/School Spring/Unit21.4pythonoop/python-oo-practice/words.txt")
 print(webster.random())
